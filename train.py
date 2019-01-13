@@ -28,8 +28,8 @@ class Train:
                     self.path.append(station)
                     station.add_train(self)
                 self.checkmove = 0
-            else:
-                self.cur_sta.set_checktrans()
+        else:
+            self.cur_sta.set_checktrans()
 
 
 
