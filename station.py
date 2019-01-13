@@ -1,7 +1,7 @@
 class Station:
 
     def __init__(self, station):
-        self.line =  station[0]
+        self.line = station[0]
         self.id = station[1]
         self.name = station[2]
         if station[3] is not None:
@@ -11,9 +11,8 @@ class Station:
         self.train = []
         self.checktrans = False
 
-
     def print_name(self):
-        print(self.name,end=' -> ')
+        print(self.name, end=' -> ')
 
     def get_line(self):
         return self.line
@@ -32,9 +31,9 @@ class Station:
 
     def set_check(self):
         if self.check is not True:
-          self.check = True
+            self.check = True
         else:
-          self.check = False
+            self.check = False
 
     def set_checktrans(self):
         if self.checktrans is False:
@@ -50,7 +49,7 @@ class Station:
 
     def pop_train(self):
         if len(self.train) > 0:
-          self.train.pop(0)
+            self.train.pop(0)
 
     def print_status(self):
         if len(self.train) > 0:
@@ -58,7 +57,7 @@ class Station:
                 line = self.transfer
             else:
                 line = self.line
-            print(self.name + '(' + line + ':' + self.id + ')',end='-')
+            print(self.name + '(' + line + ':' + self.id + ')', end='-')
             for i in self.train:
                 print(i.get_id(), end=' ')
             print()

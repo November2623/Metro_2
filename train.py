@@ -23,15 +23,16 @@ class Train:
                     station.add_train(self)
                 elif len(self.path) < n:
                     self.cur_sta.pop_train()
+                    if check == 2:
+                        self.cur_sta.set_checktrans()
                     station.set_check()
                     self.cur_sta = station
                     self.path.append(station)
                     station.add_train(self)
+
                 self.checkmove = 0
         else:
             self.cur_sta.set_checktrans()
-
-
 
     def get_cur(self):
         return self.cur_sta
@@ -45,6 +46,7 @@ class Train:
     def get_length_path(self):
         return len(self.path)
 
+
     def check_end(self, end):
         if self.cur_sta == end:
             return True
@@ -53,6 +55,6 @@ class Train:
 
 def check_loop(lst_train, end):
     for i in lst_train:
-      if i.check_end(end) == False:
-        return True
+        if i.check_end(end) is False:
+            return True
     return False

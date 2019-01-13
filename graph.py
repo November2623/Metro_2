@@ -1,5 +1,7 @@
 from station import *
 from line import *
+
+
 class Graph:
 
     def __init__(self, lst_line=[]):
@@ -32,48 +34,48 @@ class Graph:
 
 
 def get_data(filename):
-      with open(filename, 'r') as f:
-          data = f.readlines()
-          lst = []
-          req = []
-          temp = ''
-          for i in data:
-              if i[0] == '#':
-                  temp = i[1:-1]
-              elif i[0].isdigit():
-                  lst.append(temp + ':' + i[:-1])
-              else:
-                  req.append(i)
-      return lst, req
+    with open(filename, 'r') as f:
+        data = f.readlines()
+        lst = []
+        req = []
+        temp = ''
+    for i in data:
+        if i[0] == '#':
+            temp = i[1:-1]
+        elif i[0].isdigit():
+            lst.append(temp + ':' + i[:-1])
+        else:
+            req.append(i)
+    return lst, req
 
 
 def get_stations(lst):
-      lst_station = []
-      for i in lst:
-          tmplst = i.split(":")
-          if len(tmplst) == 3:
-              tmplst.append(None)
-          else:
-              del tmplst[3]
-          lst_station.append(Station(tmplst))
-      return lst_station
+    lst_station = []
+    for i in lst:
+        tmplst = i.split(":")
+        if len(tmplst) == 3:
+            tmplst.append(None)
+        else:
+            del tmplst[3]
+        lst_station.append(Station(tmplst))
+    return lst_station
+
 
 def get_lines(lst_station):
-      lst_line = []
-      tmpdict = {}
-      for i in lst_station:
-          tmpline = i.get_line()
-          if tmpline not in tmpdict.keys():
-              tmpdict[tmpline] = []
-          tmpdict[tmpline].append(i)
-      for i, j in tmpdict.items():
-          lst_line.append(Line(i,j))
-      return lst_line
+    lst_line = []
+    tmpdict = {}
+    for i in lst_station:
+        tmpline = i.get_line()
+        if tmpline not in tmpdict.keys():
+            tmpdict[tmpline] = []
+        tmpdict[tmpline].append(i)
+    for i, j in tmpdict.items():
+        lst_line.append(Line(i, j))
+    return lst_line
+
 
 def bfs_paths(graph, start, end):
     queue = [[start, [start]]]
-    path_name = []
-    path_name.append(start.get_name())
     while queue:
         [vertex, path] = queue.pop(0)
         for next in graph[vertex]:
@@ -83,10 +85,22 @@ def bfs_paths(graph, start, end):
                 else:
                     queue.append([next, path + [next]])
 
+
+def dfs_paths(graph, start, goal, path=None):
+    if path is None:
+        path = [start]
+    if start == goal:
+        yield path
+    for next in graph[start]:
+        if not check_name_path(path, next.get_name()):
+            yield from dfs_paths(graph, next, goal, path + [next])
+
+
 def print_list(lst):
     for i in lst:
         i.print_name()
     print()
+
 
 def check_name_path(lst, name):
     for i in lst:
