@@ -6,28 +6,30 @@ class Train:
         self.checkmove = 0
         self.path = [start]
 
-
     def move_to_station(self, station, n):
         self.checkmove += 1
         if self.cur_sta.get_line() != station.get_line():
             check = 2
         else:
             check = 1
-        if self.checkmove >= check and station.get_aval() is True:
-          if self.cur_sta:
-              self.cur_sta.set_check()
-          if len(self.path) == n - 1:
-              self.cur_sta.pop_train()
-              self.cur_sta = station
-              self.path.append(station)
-              station.add_train(self)
-          elif len(self.path) < n:
-              self.cur_sta.pop_train()
-              station.set_check()
-              self.cur_sta = station
-              self.path.append(station)
-              station.add_train(self)
-          self.checkmove = 0
+        if self.checkmove >= check:
+            if station.get_aval() is True:
+                if self.cur_sta:
+                    self.cur_sta.set_check()
+                if len(self.path) == n - 1:
+                    self.cur_sta.pop_train()
+                    self.cur_sta = station
+                    self.path.append(station)
+                    station.add_train(self)
+                elif len(self.path) < n:
+                    self.cur_sta.pop_train()
+                    station.set_check()
+                    self.cur_sta = station
+                    self.path.append(station)
+                    station.add_train(self)
+                self.checkmove = 0
+            else:
+                self.cur_sta.set_checktrans()
 
 
 
@@ -45,7 +47,7 @@ class Train:
 
     def check_end(self, end):
         if self.cur_sta == end:
-          return True
+            return True
         return False
 
 

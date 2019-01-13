@@ -5,12 +5,10 @@ class Graph:
     def __init__(self, lst_line=[]):
         self.lst_line = lst_line
 
-
     def get_station(self, line, id):
         for i in self.lst_line:
             if i.get_line() == line:
                 return i.get_lst_station()[id-1]
-
 
     def build_graph(self):
         graph = {}
@@ -72,9 +70,6 @@ def get_lines(lst_station):
           lst_line.append(Line(i,j))
       return lst_line
 
-
-
-
 def bfs_paths(graph, start, end):
     queue = [[start, [start]]]
     path_name = []
@@ -87,7 +82,6 @@ def bfs_paths(graph, start, end):
                     yield path + [next]
                 else:
                     queue.append([next, path + [next]])
-
 
 def print_list(lst):
     for i in lst:
